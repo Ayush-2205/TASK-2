@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title> Skills Enhancement</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Navigation - Flexbox */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #34495e;
+      padding: 1rem 2rem;
+      color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      user-select: none;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+    nav ul li {
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    nav ul li:hover {
+      color: #1abc9c;
+    }
+
+    /* Main layout using CSS Grid */
+    main {
+      flex-grow: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1000px;
+      margin: 2rem auto;
+    }
+
+    /* Contact Form */
+    section.contact-form {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+    }
+    section.contact-form h2 {
+      margin-bottom: 1rem;
+      color: #34495e;
+      font-weight: 700;
+      border-bottom: 3px solid #1abc9c;
+      padding-bottom: 0.3rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      padding: 0.6rem 0.8rem;
+      border: 1.5px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #1abc9c;
+      box-shadow: 0 0 5px #1abc9c;
+    }
+    textarea {
+      min-height: 100px;
+      font-family: inherit;
+    }
+    input[type="submit"] {
+      background: #1abc9c;
+      border: none;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 1rem;
+    }
+    input[type="submit"]:hover {
+      background: #16a085;
+    }
+    .error-message {
+      color: #e74c3c;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-top: -0.6rem;
+      margin-bottom: 0.6rem;
+      display: none;
+    }
+    .error-visible {
+      display: block;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    /* To-Do List */
+    section.todo-list {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+    }
+    section.todo-list h2 {
+      margin-bottom: 1rem;
+      color: #34495e;
+      font-weight: 700;
+      border-bottom: 3px solid #1abc9c;
+      padding-bottom: 0.3rem;
+    }
+    form.todo-add-form {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    form.todo-add-form input[type="text"] {
+      flex-grow: 1;
+      padding: 0.6rem 0.8rem;
+      border: 1.5px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    form.todo-add-form input[type="text"]:focus {
+      outline: none;
+      border-color: #1abc9c;
+      box-shadow: 0 0 5px #1abc9c;
+    }
+    form.todo-add-form button {
+      background: #1abc9c;
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 0 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    form.todo-add-form button:hover {
+      background: #16a085;
+    }
+    ul.todo-items {
+      list-style: none;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+    ul.todo-items li {
+      background: #ecf0f1;
+      margin-bottom: 0.5rem;
+      padding: 0.7rem 1rem;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      user-select: none;
+    }
+    ul.todo-items li button.remove-btn {
+      background: #e74c3c;
+      border: none;
+      color: white;
+      padding: 0 0.8rem;
+      border-radius: 5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      user-select: none;
+    }
+    ul.todo-items li button.remove-btn:hover {
+      background: #c0392b;
+    }
+
+    /* Responsive layout */
+    @media (max-width: 768px) {
+      main {
+        grid-template-columns: 1fr;
+        padding: 1.5rem 1rem;
+        gap: 1.5rem;
+      }
+      nav {
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 1rem;
+      }
+      nav ul {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">SkillBuilder</div>
+    <ul>
+      <li tabindex="0">Contact Form</li>
+      <li tabindex="0">To-Do List</li>
+    </ul>
+  </nav>
+  <main>
+    <section class="contact-form" aria-labelledby="contactform-title">
+      <h2 id="contactform-title">Contact Form</h2>
+      <form id="contactForm" novalidate>
+        <label for="name">Name <span aria-hidden="true">*</span></label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required />
+        <div class="error-message" id="errorName">Please enter your name.</div>
+
+        <label for="email">Email <span aria-hidden="true">*</span></label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        <div class="error-message" id="errorEmail">Please enter a valid email.</div>
+
+        <label for="message">Message (optional)</label>
+        <textarea id="message" name="message" placeholder="Your message here..."></textarea>
+
+        <input type="submit" value="Send Message" />
+      </form>
+    </section>
+
+    <section class="todo-list" aria-labelledby="todolist-title">
+      <h2 id="todolist-title">Dynamic To-Do List</h2>
+      <form class="todo-add-form" id="todoForm" aria-label="Add new task">
+        <input type="text" id="todoInput" placeholder="Add a new task..." aria-required="true" />
+        <button type="submit" aria-label="Add task">Add</button>
+      </form>
+      <ul class="todo-items" id="todoItems" aria-live="polite" aria-relevant="additions removals">
+        <!-- Dynamic list items appear here -->
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    // Contact form validation
+    const contactForm = document.getElementById('contactForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const errorName = document.getElementById('errorName');
+    const errorEmail = document.getElementById('errorEmail');
+
+    function isValidEmail(email) {
+      // Simple email regex validation
+      const re = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/; // Wrong escaped regex (should fix)
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    contactForm.addEventListener('submit', function(event) {
+      let valid = true;
+
+      // Reset error states
+      errorName.classList.remove('error-visible');
+      errorEmail.classList.remove('error-visible');
+
+      if (nameInput.value.trim() === '') {
+        errorName.classList.add('error-visible');
+        valid = false;
+      }
+      if (!isValidEmail(emailInput.value.trim())) {
+        errorEmail.classList.add('error-visible');
+        valid = false;
+      }
+
+      if (!valid) {
+        event.preventDefault();
+      } else {
+        // On success, show alert or confirmation, then reset form
+        event.preventDefault();
+        alert('Thank you for your message, ' + nameInput.value.trim() + '!');
+        contactForm.reset();
+      }
+    });
+
+    // Dynamic To-Do List (DOM Manipulation)
+    const todoForm = document.getElementById('todoForm');
+    const todoInput = document.getElementById('todoInput');
+    const todoItems = document.getElementById('todoItems');
+
+    // Create a new task element
+    function createTaskItem(taskText) {
+      const li = document.createElement('li');
+      li.textContent = taskText;
+
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'Remove';
+      removeBtn.classList.add('remove-btn');
+      removeBtn.setAttribute('aria-label', 'Remove task: ' + taskText);
+      removeBtn.addEventListener('click', () => {
+        todoItems.removeChild(li);
+      });
+
+      li.appendChild(removeBtn);
+
+      return li;
+    }
+
+    // Handle adding new task
+    todoForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const task = todoInput.value.trim();
+      if (task === '') {
+        todoInput.focus();
+        return;
+      }
+      const newTask = createTaskItem(task);
+      todoItems.appendChild(newTask);
+      todoInput.value = '';
+      todoInput.focus();
+    });
+  </script>
+</body>
+</html>
+
